@@ -1,3 +1,4 @@
+//create main divs
 const div = document.createElement("div");
 div.className = "container-fluid text-center main";
 document.body.appendChild(div)
@@ -6,18 +7,13 @@ const row = document.createElement("div");
 row.className = "row"
 div.appendChild(row);
 
-$.get('https://www.googleapis.com/books/v1/volumes?q=fernan').then(function(response){
-    console.log(response);
-});
-
 $('.btn').click(function(){
-
     //get user input
     const userSearch = $('input').val();
+    //get google books api
     $.get('https://www.googleapis.com/books/v1/volumes?q=' + userSearch).then(function(response){
         
         for(let i = 0; i < response.items.length; i++) {
-
             let title       = response.items[i].volumeInfo.title;
             let authors     = response.items[i].volumeInfo.authors;
             let price       = 'N/A';
@@ -26,7 +22,6 @@ $('.btn').click(function(){
             }; 
             let pic         = response.items[i].volumeInfo.imageLinks.thumbnail;
             let anchor      = response.items[i].volumeInfo.infoLink;
-
 
             //create div
             let col = document.createElement('div');
@@ -59,12 +54,13 @@ $('.btn').click(function(){
             img.src = pic;
             bookdiv.appendChild(img);
 
+            //create anchor tag for book preview
             let a = document.createElement('a');
             a.href = anchor;
             a.target = '_blank';
-            a.textContent = 'Preview Here'
+            a.textContent = 'Preview Here';
             bookdiv.appendChild(a);
-        }
+        };
     });
 });
 
